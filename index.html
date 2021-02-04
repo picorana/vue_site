@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Sara Di Bartolomeo, personal website</title>
+  <meta name="author" content="Sara Di Bartolomeo">
+  
+
+    <script src="/lib/jquery-3.5.1.min.js"></script>
+    <script src="/lib/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/hack.css">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/progressively/dist/progressively.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="row align-items-start">
+            <div class="col-4">
+                <div data-include="navbar"></div> 
+            </div>
+            <div class="col-8">
+                <div data-include="bio"></div> 
+                <br>
+                <br>
+                <h4># Portfolio</h4>
+                ============================ <br>
+                <div data-include="portfolio"></div> 
+                <br>
+                <br>
+                <h4># Publications</h4>
+                ============================ <br>
+                <div data-include="publications"></div> 
+            </div>
+        </div>
+    </div>
+</body>
+
+    <script>
+            $(function () {
+        var includes = $('[data-include]')
+        $.each(includes, function () {
+            var file = 'views/' + $(this).data('include') + '.html'
+            $(this).load(file)
+        })
+        })
+
+    </script>
+</html>

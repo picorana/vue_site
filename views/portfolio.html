@@ -1,0 +1,286 @@
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+<link rel="stylesheet" href="https://unpkg.com/progressively/dist/progressively.min.css">
+
+
+<style>
+	* { box-sizing: border-box; }
+
+	body { font-family: sans-serif; }
+
+	.t-hackcss-navigation{
+		padding-right: 20px;
+	}
+	/* --- IMPORTANT: MOVE THIS TO MAIN BODY */
+
+	/* ---- grid ---- */
+
+	.grid {
+	  background: #FFF;
+	}
+
+	/* clearfix */
+	.grid:after {
+	  content: '';
+	  display: block;
+	  clear: both;
+	}
+
+	/* ---- grid-item ---- */
+
+	.grid-sizer,
+	.grid-item {
+	  width: 20%;
+	}
+
+	.grid-item {
+	  height: 120px;
+	  float: left;
+	  background: #222;
+	  border: 2px solid #333;
+	  border-color: #FFF;
+	  border-radius: 10px;
+	  overflow: hidden;
+	}
+
+	.grid-item--width2 { width:  40%; }
+	.grid-item--width3 { width:  60%; }
+	.grid-item--width4 { width:  80%; }
+	.grid-item--width5 { width:  100%; }
+
+	.grid-item--height15 { height: 150px; }
+	.grid-item--height2 { height: 200px; }
+	.grid-item--height25 { height: 230px; }
+	.grid-item--height3 { height: 260px; }
+	.grid-item--height35 { height: 300px; }
+	.grid-item--height4 { height: 360px; }
+
+	.portfolio-btn {
+		border: 2px solid #333; 
+		border-color: #ff2e88; 
+		border-radius: 10px; 
+		background-color: #222; 
+		padding: 15px;
+	}
+
+	.portfolio-btn:hover {
+		background-color: #444;
+	}
+
+	.portfolio-project-header {
+		color: #ff2e88;
+		font-size: 2em;
+		font-weight: bold;
+		margin: 20px;
+	}
+
+</style>
+    <div id="array-rendering">
+        <div v-for="project in projects">
+            <div class="portfolio-project-header"># {{ project.name }}</div>
+            <div class="grid js-masonry" style="height: auto">
+                <div class="grid-sizer"></div>
+
+                <div v-for="box in project.boxes" v-if="box.img" class="grid-item grid-item--width5" style="overflow: hidden; height: auto">
+                    <figure class="progressive" style="margin: 0px">
+                    <a :href='box.img' data-lightbox="image-2">
+                        <img width=100% class="progressive__img progressive--not-loaded" :data-progressive="box.img" :src="box.slowimg">
+                    </a>
+                    </figure>
+                </div>
+
+                <div v-for="box in project.boxes" v-if="box.type == 'publication'" class="grid-item grid-item--width5" style="overflow: hidden; height: auto">
+                    <div style="text-align: center; padding:15px">
+                        <a :href="box.url" style="font-style: italic;"><b>{{ box.title }}</b></a><br>
+
+                        <span style="font-size: 12px; color:#FFF" v-html="box.authors"></span>
+                        <br>
+
+                        <span style="font-size: 12px; color:#FFF; font-style: italic;" v-html="box.venue"></span>
+                        <br>
+                        
+                    </div>
+                </div>
+                
+                <div v-for="box in project.boxes" v-if="box.textDescription" class="grid-item grid-item--width5" style="height: auto">
+                    <div style="text-align: center; padding:15px">
+                        <a :href="box.url"><b>{{ box.title }}</b></a><br><br>
+
+                        <span style="font-size: 12px; color:#FFF" v-html="box.textDescription"></span>
+                        <br><br>
+                        <div v-for="btn in box.btns">
+                            <button class="portfolio-btn">
+                                <a :href="btn.url"><b>{{ btn.name }}</b></a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+
+<script>
+
+publications = [
+    {
+        projectid: "Sequence Braiding",
+        title: "Sequence Braiding: Visual Overviews of Temporal Event Sequences and Attributes",
+        authors: "Sara Di Bartolomeo, Yixuan Zhang, Fangfang Sheng, Cody Dunne",
+        url: "https://osf.io/mq2wt/download?format=pdf",
+        venue: "IEEE Transactions on Visualization and Computer Graphics 2020",
+        year: 2020
+    },
+    {
+        projectid: "Shapeshifting Timelines",
+        title: "Evaluating the Effect of Timeline Shape on Visualization Task Performance",
+        authors: "Sara Di Bartolomeo, Aditeya Pandey, Aristotelis Leventidis, David Saffo, Uzma Haque Syeda, Elin Carstensdottir, Magy Seif El-Nasr, Michelle A Borkin, Cody Dunne",
+        venue: "Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems",
+        url: "https://dl.acm.org/doi/pdf/10.1145/3313831.3376237"
+    },
+    {
+        projectid: "Sparqling",
+        title: "The SPARQLING system for SPARQL queries over GRAPHOL ontologies",
+        authors: "Sara Di Bartolomeo, Gianluca Pepe, Valerio Santarelli, Domenico Fabio Savo",
+        url: "https://www.dis.uniroma1.it/~savo/papers/ISWC-2018.pdf",
+        venue: "ISWC 2018"
+    },
+    {
+        projectid: "Sparqling",
+        title: "The SPARQLING system for SPARQL queries over GRAPHOL ontologies",
+        authors: "Sara Di Bartolomeo, Gianluca Pepe, Valerio Santarelli, Domenico Fabio Savo",
+        url: "https://www.dis.uniroma1.it/~savo/papers/ISWC-2018.pdf",
+        venue: "ISWC 2018"
+    }
+]
+
+projectdata = {
+    projects: [
+        {
+            name: "Sequence Braiding",
+            boxes: [
+                {
+                    title: "Sequence Braiding",
+                    url: "https://visdunneright.github.io/sequence_braiding/docs/",
+                    textDescription: '<b>Sequence Braiding</b> is a novel network visualization technique for temporal event sequences and attributes. It is a layered network layout algorithm for creating visualizations. Layer assignment is done using multiple sequence alignment by event type. Nodes within layers are ordered hierarchically first by attribute bins and then to minimize edge crossings. Edges are bundled and smoothly routed across layers. The algorithm is robust to arbitrary ordering, absence, and duplication of events.',
+                    btns: [
+                        { 
+                           name: "visit the website",
+                           url: "https://visdunneright.github.io/sequence_braiding/docs/" 
+                        } 
+                    ]
+                },
+                {
+                    img: "/activities_img/sequencebraiding0.png",
+                    slowimg: "/activities_img/sequencebraiding0.png",
+                    size: 5
+                },
+                {
+                    img: "/activities_img/sequencebraiding.gif",
+                    slowimg: "/activities_img/sequencebraiding.gif",
+                    size: 5
+                }
+            ]
+        },
+        {
+            name: "Shapeshifting Timelines",
+            boxes: [
+                {
+                    img: '/activities_img/shapeshifting_teaser.svg',
+                    slowimg: '/activities_img/shapeshifting_teaser.svg',
+                },
+                {
+                    img: '/activities_img/shapeshifting_timelines0.gif',
+                    slowimg: "/activities_img/shapeshifting_timelines0_small.gif"
+                },
+                {
+                    title: "Shapeshifting timelines",
+                    url: "https://github.com/picorana/shapeshifting_timelines",
+                    textDescription: "<b>Shapeshifting timelines</b> is a study aimed at understanding what shape of timeline works best for different types of data."
+                },
+                {
+                    img: '/activities_img/shapeshifting_timelines1.png',
+                    slowimg: "/activities_img/shapeshifting_timelines1_small.png"
+                },
+                {
+                    img: '/activities_img/shapeshifting_timelines2.png',
+                    slowimg: "/activities_img/shapeshifting_timelines2_small.png"
+                }
+            ]
+        },
+        {
+            name: "Sparqling",
+            boxes: [
+                {
+                    img: '/activities_img/sparqling1.gif',
+                    slowimg: "/activities_img/sparqling1_small.gif",
+                },
+                {
+                    title: "Sparqling",
+                    url: "https://github.com/picorana/sparqling",
+                    textDescription: "SPARQLING is a system for visual SPARQL query building based on the GRAPHOL visual language for ontologies.</b> <br><br> The characterizing feature of SPARQLING is the idea to preserve and take advantage of the native diagrammatic representation of G RAPHOL ontologies, allowing the user to navigate it, and to construct a graph-based representation of the query over it through a simple point-and-click mechanism. The system then automatically transforms the graphical query into the SPARQL syntax."
+                },
+                {
+                    img: '/activities_img/sparqling2.gif',
+                    slowimg: "/activities_img/sparqling2_small.gif"
+                },
+                {
+                    img: '/activities_img/sparqling3.png',
+                    slowimg: "/activities_img/sparqling3_small.png"
+                },
+                {
+                    img: '/activities_img/sparqling0.png',
+                    slowimg: "/activities_img/sparqling0_small.png"
+                },
+                {
+                    textDescription: '<div class="github-card" data-github="picorana/sparqling" data-width="400" data-height="" data-theme="default"></div>'
+                }
+            ]
+        }
+    ]
+}
+
+for (project of projectdata.projects){
+    if (publications.find(p => p.projectid == project.name)){
+        let el = publications.filter(p => p.projectid == project.name)
+        for (let el2 of el){
+            el2.type = "publication"
+            project.boxes.push(el2);
+        }  
+    }
+}
+
+console.log(projectdata)
+
+app = new Vue({
+  el: '#array-rendering',
+  data: projectdata
+})
+
+progressively.init({
+  onLoad: function(elem) {
+    // console.log(elem);
+  },
+  onLoadComplete: function() {
+    // console.log('All images have finished loading!');
+  }
+});
+
+$(document).ready(function () {
+	
+var $grid = $('.grid').imagesLoaded( function() {
+  // init Masonry after all images have loaded
+  $grid.masonry({
+    itemSelector: '.grid-item',
+	  columnWidth: '.grid-sizer',
+	  percentWidth: true,
+	  isAnimated: false
+  });
+
+});
+
+});
+
+</script>
