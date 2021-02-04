@@ -17,15 +17,21 @@
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/progressively/dist/progressively.min.js"></script>
 
+    <style>
+        body { 
+            font-family: sans-serif;
+            font-size: 1rem; 
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-lg">
         <div class="row align-items-start">
-            <div class="col-4">
+            <div class="col-4" id="navbar-div">
                 <div data-include="navbar"></div> 
             </div>
-            <div class="col-8">
+            <div class="col-8" id="main-col">
                 <div data-include="bio"></div> 
                 <br>
                 <br>
@@ -50,6 +56,13 @@
             $(this).load(file)
         })
         })
+
+        if (window.innerWidth < 1081) {
+            document.getElementById("main-col").className = "col-12"
+            document.getElementById("navbar-div").style.display = "none"
+        }
+            
+
 
     </script>
 </html>

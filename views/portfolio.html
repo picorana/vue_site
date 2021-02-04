@@ -7,7 +7,7 @@
 <style>
 	* { box-sizing: border-box; }
 
-	body { font-family: sans-serif; }
+	body {  }
 
 	.t-hackcss-navigation{
 		padding-right: 20px;
@@ -38,6 +38,16 @@
 	  height: 120px;
 	  float: left;
 	  background: #222;
+	  border: 2px solid #333;
+	  border-color: #FFF;
+	  border-radius: 10px;
+	  overflow: hidden;
+	}
+
+    .grid-item-img {
+	  height: 120px;
+	  float: left;
+	  background: #FFF;
 	  border: 2px solid #333;
 	  border-color: #FFF;
 	  border-radius: 10px;
@@ -79,35 +89,48 @@
     <div id="array-rendering">
         <div v-for="project in projects">
             <div class="portfolio-project-header"># {{ project.name }}</div>
-            <div class="grid js-masonry" style="height: auto">
-                <div class="grid-sizer"></div>
+            <!-- <div class="grid js-masonry" style="height: auto"> -->
+                <!-- <div class="grid-sizer"></div> -->
+            <div style = "display: flex; flex-wrap: wrap">
 
-                <div v-for="box in project.boxes" v-if="box.img" class="grid-item grid-item--width5" style="overflow: hidden; height: auto">
+                <div v-for="box in project.boxes" 
+                    v-if="box.img" 
+                    class="grid-item-img grid-item--width5" 
+                    :style="'overflow: hidden; height: auto; width: ' + box.size">
                     <figure class="progressive" style="margin: 0px">
                     <a :href='box.img' data-lightbox="image-2">
-                        <img width=100% class="progressive__img progressive--not-loaded" :data-progressive="box.img" :src="box.slowimg">
+                        <img width=100% 
+                            class="progressive__img progressive--not-loaded" 
+                            :data-progressive="box.img" :src="box.slowimg">
                     </a>
                     </figure>
                 </div>
 
-                <div v-for="box in project.boxes" v-if="box.type == 'publication'" class="grid-item grid-item--width5" style="overflow: hidden; height: auto">
+                <div v-for="box in project.boxes" 
+                    v-if="box.type == 'publication'" 
+                    class="grid-item grid-item--width5" 
+                    :style="'overflow: hidden; height: auto; width: ' + box.size">
                     <div style="text-align: center; padding:15px">
                         <a :href="box.url" style="font-style: italic;"><b>{{ box.title }}</b></a><br>
 
-                        <span style="font-size: 12px; color:#FFF" v-html="box.authors"></span>
+                        <span style="color:#FFF" v-html="box.authors"></span>
                         <br>
 
-                        <span style="font-size: 12px; color:#FFF; font-style: italic;" v-html="box.venue"></span>
+                        <span style="color:#FFF; font-style: italic;" v-html="box.venue"></span>
                         <br>
                         
                     </div>
                 </div>
                 
-                <div v-for="box in project.boxes" v-if="box.textDescription" class="grid-item grid-item--width5" style="height: auto">
+                <div v-for="box in project.boxes" 
+                    v-if="box.textDescription" 
+                    class="grid-item grid-item--width5" 
+                    :style="'overflow: hidden; height: auto; flex-shrink: ' + box.shrink">
+                    
                     <div style="text-align: center; padding:15px">
                         <a :href="box.url"><b>{{ box.title }}</b></a><br><br>
 
-                        <span style="font-size: 12px; color:#FFF" v-html="box.textDescription"></span>
+                        <span style="color:#FFF" v-html="box.textDescription"></span>
                         <br><br>
                         <div v-for="btn in box.btns">
                             <button class="portfolio-btn">
@@ -131,7 +154,7 @@ publications = [
         authors: "Sara Di Bartolomeo, Yixuan Zhang, Fangfang Sheng, Cody Dunne",
         url: "https://osf.io/mq2wt/download?format=pdf",
         venue: "IEEE Transactions on Visualization and Computer Graphics 2020",
-        year: 2020
+        year: 2020,
     },
     {
         projectid: "Shapeshifting Timelines",
@@ -149,10 +172,10 @@ publications = [
     },
     {
         projectid: "Sparqling",
-        title: "The SPARQLING system for SPARQL queries over GRAPHOL ontologies",
+        title: "SPARQLING: painlessly drawing SPARQL queries over GRAPHOL ontologies",
         authors: "Sara Di Bartolomeo, Gianluca Pepe, Valerio Santarelli, Domenico Fabio Savo",
-        url: "https://www.dis.uniroma1.it/~savo/papers/ISWC-2018.pdf",
-        venue: "ISWC 2018"
+        url: "https://www.dis.uniroma1.it/~savo/papers/VOILA-2018.pdf",
+        venue: "Demo paper at VOILA 2018"
     }
 ]
 
@@ -202,11 +225,13 @@ projectdata = {
                 },
                 {
                     img: '/activities_img/shapeshifting_timelines1.png',
-                    slowimg: "/activities_img/shapeshifting_timelines1_small.png"
+                    slowimg: "/activities_img/shapeshifting_timelines1_small.png",
+                    size: "50%"
                 },
                 {
                     img: '/activities_img/shapeshifting_timelines2.png',
-                    slowimg: "/activities_img/shapeshifting_timelines2_small.png"
+                    slowimg: "/activities_img/shapeshifting_timelines2_small.png",
+                    size: "50%"
                 }
             ]
         },
@@ -224,19 +249,41 @@ projectdata = {
                 },
                 {
                     img: '/activities_img/sparqling2.gif',
-                    slowimg: "/activities_img/sparqling2_small.gif"
+                    slowimg: "/activities_img/sparqling2_small.gif",
+                    size: "33%"
                 },
                 {
                     img: '/activities_img/sparqling3.png',
-                    slowimg: "/activities_img/sparqling3_small.png"
+                    slowimg: "/activities_img/sparqling3_small.png",
+                    size: "33%"
                 },
                 {
                     img: '/activities_img/sparqling0.png',
-                    slowimg: "/activities_img/sparqling0_small.png"
+                    slowimg: "/activities_img/sparqling0_small.png",
+                    size: "33%"
                 },
                 {
                     textDescription: '<div class="github-card" data-github="picorana/sparqling" data-width="400" data-height="" data-theme="default"></div>'
                 }
+            ]
+        },
+        {
+            name: "VR Audioscape",
+            boxes: [
+                {
+                    img: "/activities_img/vraudioscape0.gif",
+                    slowimg: "/activities_img/vraudioscape0_small.gif"
+                },
+                {
+                    title: "VR Audioscape",
+                    textDescription: "Project made during Google Summer of Code 2017 for The Processing Foundation. <br><br> VR Audioscape is a VR application made with Processing that lets the user travel through a procedural landscape generated according to music. <br>Play any music from any app on your phone, then run the app. It will automatically use as input any sound coming as output from the phone.",
+                    url: "https://github.com/picorana/VR_audioscape",
+                    btns: [
+                        {
+                            url: "https://play.google.com/store/apps/details?id=com.picorana.vraudioscape&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width=150 src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+                        }
+                    ]
+                },
             ]
         }
     ]
